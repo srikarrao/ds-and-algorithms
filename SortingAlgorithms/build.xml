@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="FalconBatch" default="distributable" basedir=".">
+
+	<property name="debuglevel" value="source,lines,vars"/>
+	<property name="lib.dir"     value="lib"/>
+	<property name="target" value="1.7"/>
+	<property name="source" value="1.7"/>
+
+
+	<path id="FalconBatch.classpath">
+		<pathelement location="bin"/>
+		<fileset dir="${lib.dir}" includes="**/*.jar"/>
+	</path>
+
+	<target name="init">
+		<mkdir dir="bin"/>
+		<mkdir dir="build"/>
+		<mkdir dir="dist"/>
+
+		<copy includeemptydirs="false" todir="bin">
+
+			<fileset dir="src">
+				<exclude name="**/*.launch"/>
+				<exclude name="**/*.java"/>
+			</fileset>
+
+			<fileset dir="lib" >
+			</fileset>
+
+		</copy>
+	</target>
+
+
+	<target name="clean">
+
+		<delete dir="bin" />
+		<delete dir="dist" />
+		<delete dir="build" />
+
+	</target>
+
+	<target name="cleanall" depends="clean"/>
+
+	<target name="build" depends="build-subprojects,build-project" />
+
+	<target name="build-subprojects" />
+
+
+	<target name="build-project" depends="init">
+
+		<echo message="${ant.project.name}: ${ant.file}"/>
+		<javac target="${target}" source="${source}" includeantruntime="false" 
+			destdir="bin" debuglevel="${debuglevel}" debug="true" >
+			<src path="src"/>
+			<classpath refid="FalconBatch.classpath"/>
+		</javac>
+
+	</target>
+
+
+	<path id="classpath">
+		<fileset dir="lib" includes="**/*.jar"/>
+	</path>
+
+	<manifestclasspath property="manifest.classpath" jarfile="${jarfile}">
+		<classpath refid="classpath"/>
+	</manifestclasspath>
+
+	<target name="build-falconBatch-jar" depends="cleanall,build">
+		<jar basedir="bin" destfile="build/falconBatch.jar">
+			<manifest>
+				<attribute name="Main-Class" value="com.wellsfargo.falconBatch.simulator.FalconSimulator" />
+				<attribute name="Class-path" value="${manifest.classpath}"/>
+			</manifest>
+		</jar>
+	</target>
+	<echo message="${env}"/>
+
+	<target name="distributable" depends="cleanall,build-falconBatch-jar"
+	            description="Build the distributable JAR ">
+
+		<tar destfile="${basedir}/dist/${ant.project.name}.tar">
+
+			<tarfileset dir="${basedir}/lib" prefix="lib">
+				<patternset id="dist.libs">
+					<include name ="**/*.jar"/>
+				</patternset>
+			</tarfileset>
+
+			<!-- <tarfileset dir="${basedir}/config" prefix="config">
+				<patternset id="dist.configs">
+					<include name ="**/*.*"/>
+				</patternset>
+			</tarfileset>
+			-->
+
+			<fileset file="${basedir}/build/falconBatch.jar"/>
+			
+			
+			<tarfileset dir="${basedir}/config-location/${env}" prefix="config">
+				<patternset id="dist.configs">
+					<include name ="**/*.*"/>
+				</patternset>
+			</tarfileset>
+			<tarfileset dir="${basedir}/config-location/common" prefix="config">
+				<patternset id="myproject.dist.configs">
+					<include name ="**/*.*"/>
+				</patternset>
+			</tarfileset>
+		</tar>
+
+		<zip destfile="${basedir}/dist/${ant.project.name}.zip">
+			<zipfileset dir="${basedir}/lib" prefix="lib">
+				<patternset id="myproject.dist.libs">
+					<include name ="**/*.jar"/>
+				</patternset>
+			</zipfileset>
+			<zipfileset dir="${basedir}/config-location/${env}" prefix="config">
+
+				<patternset id="myproject.dist.configs">
+					<include name ="**/*.*"/>
+				</patternset>
+			</zipfileset>
+			<zipfileset dir="${basedir}/config-location/common" prefix="config">
+
+				<patternset id="myproject.dist.configs">
+					<include name ="**/*.*"/>
+				</patternset>
+			</zipfileset>
+
+			<fileset file="${basedir}/build/falconBatch.jar"/>
+		</zip>
+
+	</target>
+
+	<target name="config">
+		<copy todir="${basedir}/dist/config-location">
+			<fileset dir="${basedir}/config-location/${env}">
+				<include name="**"/>
+			</fileset>
+			<fileset dir="${basedir}/config-location/common">
+				<include name="**"/>
+			</fileset>
+		</copy>
+	</target>
+
+</project>
