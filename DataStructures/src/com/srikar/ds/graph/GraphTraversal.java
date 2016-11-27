@@ -98,7 +98,8 @@ public class GraphTraversal {
 			Node<String> currentNode = stack.pop();
 			visitNode(currentNode);
 			currentNode.visited = true;
-			for (Node<String> neighbor : currentNode.neighbors) {
+			for (int i = currentNode.neighbors.size() - 1; i >= 0; i--) {
+				Node<String> neighbor = currentNode.neighbors.get(i);
 				if (!neighbor.visited) {
 					stack.push(neighbor);
 				}
@@ -133,7 +134,8 @@ public class GraphTraversal {
 	}
 
 	public static void visitNode(Node<String> node) {
-		System.out.printf(" %s ", node.data);
+		if (!node.visited)
+			System.out.printf(" %s ", node.data);
 	}
 
 	public static Node<String> getSampleGraph() {
@@ -209,4 +211,5 @@ class Node<T> {
 		}
 		return true;
 	}
+
 }
