@@ -21,6 +21,7 @@ public class MergeSort {
 	 * 
 	 * @param args
 	 */
+	@SuppressWarnings("resource")
 	public static void main(String[] args) {
 
 		// declare an input array
@@ -56,7 +57,7 @@ public class MergeSort {
 		// initialize array LR[]
 		this.LR = new int[length];
 
-		System.out.println(" After Sorting and size " + length);
+		System.out.println("After Sorting and size " + length);
 		// invoking sortArray()
 		sortArray(0, length - 1);
 
