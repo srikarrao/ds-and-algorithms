@@ -12,7 +12,9 @@ import java.util.Stack;
 
 /**
  * JAVA Program to traverse a graph using Depth First Search (DFS) and Breadth
- * First Search (BFS)
+ * First Search (BFS)<br>
+ * DFS: Time Complexity O (V + E)<br>
+ * BFS: Time Complexity O (V + E)<br>
  * 
  * @author SrikarRao
  *
@@ -23,7 +25,7 @@ public class GraphTraversal {
 	public static void main(String args[]) {
 
 		Scanner scn = new Scanner(System.in);
-		Node<String> source = getSampleGraph();
+		Node<String> source = getSampleGraph2();
 		System.out.println("Choose an option: ");
 		System.out.println("1. DFS by Recursion");
 		System.out.println("2. DFS by Iterative (Stack)");
@@ -98,7 +100,8 @@ public class GraphTraversal {
 			Node<String> currentNode = stack.pop();
 			visitNode(currentNode);
 			currentNode.visited = true;
-			for (int i = currentNode.neighbors.size() - 1; i >= 0; i--) {
+			// for (int i = currentNode.neighbors.size() - 1; i >= 0; i--) {
+			for (int i = 0; i < currentNode.neighbors.size(); i++) {
 				Node<String> neighbor = currentNode.neighbors.get(i);
 				if (!neighbor.visited) {
 					stack.push(neighbor);
@@ -136,6 +139,35 @@ public class GraphTraversal {
 	public static void visitNode(Node<String> node) {
 		if (!node.visited)
 			System.out.printf(" %s ", node.data);
+	}
+
+	public static Node<String> getSampleGraph2() {
+		Node<String> A = new Node<String>("A");
+		Node<String> B = new Node<String>("B");
+		Node<String> C = new Node<String>("C");
+		Node<String> D = new Node<String>("D");
+		Node<String> E = new Node<String>("E");
+		Node<String> F = new Node<String>("F");
+
+		A.neighbors.add(B);
+		A.neighbors.add(C);
+
+		B.neighbors.add(A);
+		B.neighbors.add(D);
+		B.neighbors.add(E);
+
+		C.neighbors.add(A);
+		C.neighbors.add(F);
+
+		D.neighbors.add(B);
+
+		E.neighbors.add(B);
+		E.neighbors.add(F);
+
+		F.neighbors.add(C);
+		F.neighbors.add(E);
+
+		return A;
 	}
 
 	public static Node<String> getSampleGraph() {
