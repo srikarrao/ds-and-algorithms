@@ -1,6 +1,6 @@
 package com.sorting.algorthim;
 
-import java.util.Scanner;
+import java.util.Arrays;
 
 /**
  * 
@@ -9,62 +9,23 @@ import java.util.Scanner;
 
 public class MergeSort {
 
-	// Declaring the arrays
-	private int[] A;
 	private int[] LR;
 
-	// Declaring length of the arrays
-	private int length;
-
-	/**
-	 * Main method to execute the sort, merge methods
-	 * 
-	 * @param args
-	 */
-	@SuppressWarnings("resource")
 	public static void main(String[] args) {
 
-		// declare an input array
-		int[] aMain;
-		// creating a reference and assigning it to an object
+		int[] aMain = new int[] { 9, 21, 0, 100, 2, 9, 8, 12, 78, 1 };
 		MergeSort mergeSort = new MergeSort();
-		Scanner input = new Scanner(System.in);
-		System.out.print("Enter the size of the array A: ");
-		int size = input.nextInt();
-		System.out.println();
-
-		// initialize the size of array aMain[]
-		aMain = new int[size];
-		System.out.println("Please enter " + aMain.length + " values: ");
-		// assigning the user input values for the input array
-		for (int index = 0; index < aMain.length; index++) {
-			aMain[index] = input.nextInt();
-		}
-
-		// invoking the implementSorting method
+		System.out.println("Array before sorting: " + Arrays.toString(aMain));
 		mergeSort.implementSorting(aMain);
 	}
 
-	/**
-	 * @param aMain
-	 *            [] method to initialize the arrays and invoke the sortArray()
-	 *            method
-	 */
 	public void implementSorting(int[] aMain) {
-		this.A = aMain;
-		length = aMain.length;
-
-		// initialize array LR[]
+		int length = aMain.length;
 		this.LR = new int[length];
 
-		System.out.println("After Sorting and size " + length);
-		// invoking sortArray()
-		sortArray(0, length - 1);
+		sortArray(aMain, 0, length - 1);
 
-		// Displays the sorted array
-		for (int x = 0; x < A.length; x++) {
-			System.out.print(A[x] + "  ");
-		}
+		System.out.println("Array after sorting: " + Arrays.toString(aMain));
 	}
 
 	/**
@@ -73,17 +34,17 @@ public class MergeSort {
 	 * @param low
 	 * @param high
 	 */
-	private void sortArray(int low, int high) {
+	private void sortArray(int[] arr, int low, int high) {
 		// if condition to check low < high
 		if (low < high) {
 			// finding the mid element of the array
 			int mid = low + (high - low) / 2;
 			// invoking sortArray() passing low,high
-			sortArray(low, mid);
+			sortArray(arr, low, mid);
 			// invoking sortArray() passing mid+1,high
-			sortArray(mid + 1, high);
+			sortArray(arr, mid + 1, high);
 			// invoking mergeArray()
-			mergeArray(low, mid, high);
+			mergeArray(arr, low, mid, high);
 		}
 	}
 
@@ -94,11 +55,11 @@ public class MergeSort {
 	 * @param mid
 	 * @param high
 	 */
-	private void mergeArray(int low, int mid, int high) {
+	private void mergeArray(int[] arr, int low, int mid, int high) {
 
 		// for loop to initialize values to LR[]
 		for (int i = low; i <= high; i++) {
-			LR[i] = A[i];
+			LR[i] = arr[i];
 		}
 
 		int i = low;
@@ -108,17 +69,17 @@ public class MergeSort {
 		// while loop implementing the sorting
 		while (i <= mid && j <= high) {
 			if (LR[i] <= LR[j]) {
-				A[k] = LR[i];
+				arr[k] = LR[i];
 				i++;
 			} else {
-				A[k] = LR[j];
+				arr[k] = LR[j];
 				j++;
 			}
 			k++;
 		}
 
 		while (i <= mid) {
-			A[k] = LR[i];
+			arr[k] = LR[i];
 			k++;
 			i++;
 		}
