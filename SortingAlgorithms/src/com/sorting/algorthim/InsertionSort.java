@@ -15,11 +15,9 @@ public class InsertionSort {
 
 	public static void main(String[] args) {
 		Integer[] array = { 170, 45, 75, 90, 802, 2, 7, 24, 66 };
-		System.out.println("Before Insertion Sorting: "
-				+ Arrays.toString(array));
+		System.out.println("Before Insertion Sorting: " + Arrays.toString(array));
 		sort(array);
-		System.out
-				.println("After Insertion Sorting: " + Arrays.toString(array));
+		System.out.println("After Insertion Sorting: " + Arrays.toString(array));
 	}
 
 	/** Implementing Insertion Sorting **/
@@ -29,8 +27,8 @@ public class InsertionSort {
 			int j = i - 1;
 			while (j >= 0 && array[j] > key) {
 				array[j + 1] = array[j];
-				j = j - 1;
-				array[j + 1] = key;
+				array[j] = key;
+				j--;
 			}
 		}
 		return array;
