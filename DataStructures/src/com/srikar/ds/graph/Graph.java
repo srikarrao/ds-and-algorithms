@@ -68,19 +68,13 @@ public class Graph {
      * 					update vertexToDistances as
      * 						vertexToDistances.get(adjacent).distance : rootToAdjacentDistance
      * 						vertexToDistances.get(adjacent).prevVertex : root
-     *
-     * 					minDistance : Math.min(adjDist, minDistance)
-     * 					if minDistance equals adjDist then minVertex : adjacent end if
      * 				end if
      *
+     * 			    minDistance : Math.min(adjDist, minDistance)
+     *              if minDistance equals adjDist then minVertex : adjacent end if
      * 			end if
      * 		end loop
      * 		add minVertex to queue
      * 	end loop
-     *
-     *
-     *
-     *
-     *
      */
 }
