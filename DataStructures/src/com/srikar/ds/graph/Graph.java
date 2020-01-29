@@ -42,19 +42,16 @@ public class Graph {
      *
      * 	initialize visited: []
      * 	initialize vertexToDistances: <Vertex, Distance {distance, prevVertex}>
-     * 	initialize vertexQueue: <Vertex>
+     * 	initialize minHeap: <(Vertex, EdgeDistance)>
      *
      * 	iterate graphs.vertices
      * 		initialize vertexToDistances : <vertex, (INFINITY, null)>
      *
      * 		update vertexToDistances : <source, (0, null)>
-     * 		add vertexQueue : <source>
+     * 		add minHeap : <(source, 0)>
      *
-     * 	iterate queue until empty
-     * 		initialize root: pop vertexQueue.min
-     * 		initialize minDistance : INFINITY
-     * 		initialize minVertex : null
-     *
+     * 	iterate minHeap until empty
+     * 		initialize root: pop minHeap.min
      * 		visited.add :: root
      *
      * 		iterate root.edges -> edge
@@ -69,12 +66,9 @@ public class Graph {
      * 						vertexToDistances.get(adjacent).distance : rootToAdjacentDistance
      * 						vertexToDistances.get(adjacent).prevVertex : root
      * 				end if
-     *
-     * 			    minDistance : Math.min(adjDist, minDistance)
-     *              if minDistance equals adjDist then minVertex : adjacent end if
+     *              add (adj, edge.distance) to minHeap
      * 			end if
      * 		end loop
-     * 		add minVertex to queue
      * 	end loop
      */
 }
