@@ -11,6 +11,8 @@ package com.srikar.ds;
  * References:
  * http://www.geeksforgeeks.org/dynamic-programming-set-5-edit-distance/
  * https://en.wikipedia.org/wiki/Edit_distance
+ * https://allaboutalgorithms.wordpress.com/2011/10/31/edit-distance-between-two-strings-using-recursion/
+ * https://stackoverflow.com/questions/14616339/complexity-of-edit-distance-levenshtein-distance-recursion-top-down-implementa
  */
 public class MinimumEditDistance {
 
