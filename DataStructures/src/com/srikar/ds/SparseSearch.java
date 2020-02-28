@@ -3,14 +3,18 @@ package com.srikar.ds;
 public class SparseSearch {
 
     public static void main(String[] args) {
-        System.out.println(sparseSearch(new String[]{"at", "", "", "", "ball", "", "", "car", "", "", "dad", "", ""}, "ball"));
-        System.out.println(sparseSearch(new String[]{"at", "", "", "", "ball", "", "", "car", "", "", "dad", "", ""}, "zebra"));
-        System.out.println(sparseSearch(new String[]{"at", "", "", "", "ball", "", "", "car", "", "", "dad", "", "zebra"}, "zebra"));
-        System.out.println(sparseSearch(new String[]{"at", "", "", "", "ball", "", "", "car", "", "", "dad", "", "zebra"}, "at"));
-        System.out.println(sparseSearch(new String[]{"at", "", "", "", "", "", ""}, "at"));
-        System.out.println(sparseSearch(new String[]{"", "", "", "", "", "", "zebra"}, "zebra"));
-        System.out.println(sparseSearch(new String[]{"", "", "hello", "", ""}, "hello"));
-        System.out.println(sparseSearch(new String[]{"", "", "", "", ""}, "hello"));
+        System.out.println(sparseSearch(new String[]{"at", "", "", "", "ball", "", "", "car", "", "", "dad", "", "zebra"}, "zebra")); // 12
+        System.out.println(sparseSearch(new String[]{"at", "", "", "", "ball", "", "", "car", "", "", "dad", "", ""}, "ball")); // 4
+        System.out.println(sparseSearch(new String[]{"at", "", "", "", "ball", "", "", "car", "", "", "dad", "", ""}, "zebra")); // -1
+        System.out.println(sparseSearch(new String[]{"at", "", "", "", "ball", "", "", "car", "", "", "dad", "", "zebra"}, "at")); // 0
+        System.out.println(sparseSearch(new String[]{"at", "", "", "", "", "", ""}, "at")); // 0
+        System.out.println(sparseSearch(new String[]{"", "", "", "", "", "", "zebra"}, "zebra")); // 6
+        System.out.println(sparseSearch(new String[]{"", "", "hello", "", ""}, "hello")); // 2
+        System.out.println(sparseSearch(new String[]{"", "", "", "", ""}, "hello")); // -1
+        System.out.println(sparseSearch(new String[]{"apple", "ball", "cat", "doll", "zebra"}, "apple")); // 0
+        System.out.println(sparseSearch(new String[]{"apple", "ball", "cat", "doll", "zebra"}, "cat")); // 2
+        System.out.println(sparseSearch(new String[]{"apple", "ball", "cat", "doll", "zebra"}, "zebra")); // 4
+        System.out.println(sparseSearch(new String[]{"apple", "ball", "cat", "doll", "zebra"}, "dust")); // -1
     }
 
     public static int sparseSearch(String[] strings, String str) {
@@ -24,15 +28,12 @@ public class SparseSearch {
         }
 
         int mid = first + (last - first) / 2;
+        int left = mid - 1;
+        int right = mid + 1;
 
         if (strings[mid].isEmpty()) {
-            int left = mid - 1;
-            int right = mid + 1;
-
-            while (true) {
-                if (left < first && right > last) {
-                    return -1;
-                } else if (right <= last && !strings[right].isEmpty()) {
+            while (left >= first && right <= last) {
+                if (right <= last && !strings[right].isEmpty()) {
                     mid = right;
                     break;
                 } else if (left >= first && !strings[left].isEmpty()) {
@@ -43,6 +44,10 @@ public class SparseSearch {
                 right++;
                 left--;
             }
+        }
+
+        if (left + 1 < first || right - 1 > last) {
+            return -1;
         }
 
         if (str.equals(strings[mid])) {
